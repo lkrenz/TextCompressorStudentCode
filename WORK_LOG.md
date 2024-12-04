@@ -1,9 +1,10 @@
 Name: YOUR NAME HERE
 
-| Date    |  Time  |                                     Update |
-|:--------|:------:|-------------------------------------------:|
-| April 5 | 9-10pm | I tried to write abstract, efficient code. |
-|         |        |                                            |
+| Date       |        Time         |                                                                                                                                                                                                                                                                                                                                                                                       Update |
+|:-----------|:-------------------:|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| April 5    |       9-10pm        |                                                                                                                                                                                                                                                                                                                                                   I tried to write abstract, efficient code. |
+| December 2 | 30 Minutes in class |                                                                                                                             I spent this time working with my group to come up with a solution to this problem. We spent most of the time trying to figure out a way to use codes for words to save on space, but I think I will begin to solve this problem using the binary tree solution. |
+| December 4 |      9:25-9:55      | In this time, I finished fleshing out my solution and started to code it. I finished coding the node class and most of the binary tree class, but I didn't have enough time to finish the build sequence method. I also need to figure out a good way to include the binary tree in the meta data of the file, I'll work on this once I finish coding the rest of the data storage solution. |
 
 
 To add a new row to the table, click into a cell and then hit shift-enter.

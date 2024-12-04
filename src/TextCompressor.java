@@ -32,9 +32,86 @@ public class TextCompressor {
     private static void compress() {
 
         // TODO: Complete the compress() method
+        // Need some way to determine a standard code length, could include space in the binary tree and not always include it
+        // I'll experiment with code lengths, but start with 10.
+        // Need to add a check that if the sequence doesn't end in a space, return, or any kind of punctuation to continue sequence with next set.
 
         BinaryStdOut.close();
     }
+
+    private class BinaryTree() {
+        private Node root;
+
+        public BinaryTree() {
+            this.root = new Node('s');
+        }
+
+        public BinaryTree(char letter) {
+            this.root = new Node(letter);
+        }
+
+        private String getSequence(String input) {
+            String sequence = "";
+            Node current = this.root;
+            for (int i = 0; i < input.length(); i++) {
+
+                // 0 is reject character
+                if (input.charAt(i) == '0') {
+                    current = root.getChild1();
+                }
+                else {
+                    sequence = sequence + current.getLetter();
+                    current = current.getChild2();
+                }
+                if (current == null) {
+                    return sequence;
+                }
+            }
+            return sequence;
+        }
+
+
+        // Build the input string into the binary tree and return the pathway
+        private String buildSequence(String input) {
+            for (int i = 0; i < input.length(); i++) {
+
+            }
+        }
+
+    }
+
+    private class Node() {
+        private char letter;
+
+        private Node child1;
+        private Node child2;
+
+        public Node(char letter) {
+            this.letter = letter;
+        }
+
+        public void addChild1(char letter) {
+            this.child1 = new Node(letter);
+        }
+
+        public void addChild2(char letter) {
+            this.child2 = new Node(letter);
+        }
+
+        public Node getChild1() {
+            return child1;
+        }
+
+        public Node getChild2() {
+            return child2;
+        }
+
+        public char getLetter() {
+            return this.letter;
+        }
+    }
+
+
 
     private static void expand() {
 
