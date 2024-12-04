@@ -32,8 +32,6 @@ import java.util.ArrayList;
 public class TextCompressor {
 
     private void compress() {
-
-        // TODO: Complete the compress() method
         // Need some way to determine a standard code length, could include space in the binary tree and not always include it
         // I'll experiment with code lengths, but start with 10.
         // Need to add a check that if the sequence doesn't end in a space, return, or any kind of punctuation to continue sequence with next set.
@@ -48,7 +46,12 @@ public class TextCompressor {
             binSequence.add(tree.buildSequence(word));
         }
 
-        BinaryStdOut.write
+        tree.compressTree();
+
+        /**
+         * Todo: add a way to separate the end of the binary tree and the beginning of the data
+         *       add encoding of main data
+         */
 
         BinaryStdOut.close();
     }
@@ -66,25 +69,41 @@ public class TextCompressor {
             this.letter = letter;
         }
 
+        public Node(int i) {
+            boolean hasChild1 = BinaryStdIn.readBoolean();
+            boolean hasChild2 = BinaryStdIn.readBoolean();
+            this.letter = BinaryStdIn.readChar();
+            if (hasChild1) {
+                child1 = new Node(1);
+            }
+            if (hasChild2) {
+                child2 = new Node(1);
+            }
+        }
+
         // Node compressed data goes has child1, has child2, own letter, child1 data, child2 data
-        public String compressNode() {
+        public void compressNode() {
             String sequence = "";
             if (child1 != null) {
-                sequence = sequence + "1";
+                BinaryStdOut.write(true);
             }
             else {
-                sequence = sequence + "0";
+                BinaryStdOut.write(false);
             }
             if (child2 != null) {
-                sequence = sequence + "1";
+                BinaryStdOut.write(true);
             }
             else {
-                sequence = sequence + "0";
+                BinaryStdOut.write(false);
             }
 
-            sequence = sequence + Integer.toBinaryString((int) this.letter);
-            String letter1 = this.letter + "";
-            sequence = sequence + letter
+            BinaryStdOut.write(letter);
+            if (child1 != null) {
+                child1.compressNode();
+            }
+            if (child2 != null) {
+                child2.compressNode();
+            }
         }
 
         public void addChild1(char letter) {
@@ -119,6 +138,10 @@ public class TextCompressor {
             this.root = new TextCompressor.Node(letter);
         }
 
+        public BinaryTree(int i) {
+            this.root = new Node(1);
+        }
+
         private String getSequence(String input) {
             String sequence = "";
             TextCompressor.Node current = this.root;
@@ -139,8 +162,8 @@ public class TextCompressor {
             return sequence;
         }
 
-        private String compressTree() {
-
+        private void compressTree() {
+            root.compressNode();
         }
 
 
@@ -190,9 +213,11 @@ public class TextCompressor {
     }
 
 
-    private static void expand() {
+    private void expand() {
 
         // TODO: Complete the expand() method
+        BinaryTree tree = new BinaryTree(1);
+
 
         BinaryStdOut.close();
     }
