@@ -46,17 +46,21 @@ public class TextCompressor {
             binSequence.add(tree.buildSequence(word));
         }
 
+        BinaryStdOut.write(binSequence.size());
+
         tree.compressTree();
 
-        /**
-         * Todo: add a way to separate the end of the binary tree and the beginning of the data
-         *       add encoding of main data
-         */
+        for (int i = 0; i < binSequence.size(); i++) {
+            String sequence = tree.getSequence(binSequence.get(i));
+            for (int j = 0; j < sequence.length(); j++) {
+                BinaryStdOut.write(sequence.charAt(i) == '1');
+            }
+        }
 
         BinaryStdOut.close();
     }
 
-    public class Node() {
+    public static class Node {
         private char letter;
 
         // Child 1 is rejected
@@ -127,15 +131,15 @@ public class TextCompressor {
         }
     }
 
-    public class BinaryTree() {
+    public class BinaryTree {
         private TextCompressor.Node root;
 
         public BinaryTree() {
-            this.root = new TextCompressor.Node('s');
+            this.root = new Node('s');
         }
 
         public BinaryTree(char letter) {
-            this.root = new TextCompressor.Node(letter);
+            this.root = new Node(letter);
         }
 
         public BinaryTree(int i) {
@@ -166,8 +170,6 @@ public class TextCompressor {
             root.compressNode();
         }
 
-
-
         // Build the input string into the binary tree and return the pathway
         // Todo ensure the main method adds periods/spaces to the sequence
         private String buildSequence(String input) {
@@ -182,7 +184,7 @@ public class TextCompressor {
                         current.addChild2(input.charAt(i + 1));
                     }
                     else if (next == null) {
-                        return sequence;
+                        break;
                     }
                 }
                 else {
@@ -192,14 +194,21 @@ public class TextCompressor {
                         current.addChild1(input.charAt(i + 1));
                     }
                     else if (next == null) {
-                        return sequence;
+                        break;
                     }
                     i--;
                 }
                 current = next;
             }
-            return sequence;
+
+            return padSequence(sequence, 10);
         }
+    }
+    private static String padSequence(String sequence, int divisor) {
+        while (sequence.length() % divisor != 0) {
+            sequence = sequence + "0";
+        }
+        return sequence;
     }
 
     private static String readWord() {
@@ -214,23 +223,44 @@ public class TextCompressor {
 
 
     private void expand() {
-
+        int numWords = BinaryStdIn.readInt();
         // TODO: Complete the expand() method
         BinaryTree tree = new BinaryTree(1);
+        String sequence;
 
+        for (int i = 0; i < numWords; i++) {
+            while (true) {
+                String binary = getSequence(10);
+                sequence = tree.getSequence(binary);
+                if (sequence.charAt(sequence.length() - 1) == ' ') {
+                    break;
+                }
+            }
+            BinaryStdOut.write(sequence);
+        }
 
         BinaryStdOut.close();
     }
 
+    private String getSequence(int sequenceLength) {
+        String sequence = "";
+        for (int i = 0; i < sequenceLength; i++) {
+            if (BinaryStdIn.readBoolean()) {
+                sequence = sequence + "1";
+            }
+            else {
+                sequence = sequence + "0";
+            }
+        }
+        return sequence;
+    }
+
     public static void main(String[] args) {
-        if      (args[0].equals("-")) compress();
-        else if (args[0].equals("+")) expand();
+
+        TextCompressor compress = new TextCompressor();
+
+        if      (args[0].equals("-")) compress.compress();
+        else if (args[0].equals("+")) compress.expand();
         else throw new IllegalArgumentException("Illegal command line argument");
     }
 }
-
-
-
-
-
-
