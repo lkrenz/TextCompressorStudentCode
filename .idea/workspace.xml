@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c0fc687-5e81-4f2e-86c0-a00732202ab3" name="Changes" comment="Still drafting code">
+    <list default="true" id="4c0fc687-5e81-4f2e-86c0-a00732202ab3" name="Changes" comment="Code drafted, running into an issue with the letter comparisons of a null node.">
+      <change afterPath="$PROJECT_DIR$/src/TST.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WORK_LOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/WORK_LOG.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TextCompressor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TextCompressor.java" afterDir="false" />
@@ -45,6 +46,11 @@
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -78,12 +84,29 @@
       <option name="project" value="LOCAL" />
       <updated>1733348742708</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Code drafted, running into an issue with the letter comparisons of a null node.">
+      <option name="closed" value="true" />
+      <created>1733356569566</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1733356569566</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Code drafted, running into an issue with the letter comparisons of a null node.">
+      <option name="closed" value="true" />
+      <created>1733505817708</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1733505817708</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Finished node class and in process of coding helper methods for BinaryTree." />
     <MESSAGE value="Still drafting code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Still drafting code" />
+    <MESSAGE value="Code drafted, running into an issue with the letter comparisons of a null node." />
+    <option name="LAST_COMMIT_MESSAGE" value="Code drafted, running into an issue with the letter comparisons of a null node." />
   </component>
 </project>

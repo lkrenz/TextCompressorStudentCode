@@ -32,32 +32,58 @@ import java.util.ArrayList;
 public class TextCompressor {
 
     private void compress() {
-        // Need some way to determine a standard code length, could include space in the binary tree and not always include it
-        // I'll experiment with code lengths, but start with 10.
-        // Need to add a check that if the sequence doesn't end in a space, return, or any kind of punctuation to continue sequence with next set.
+        TST codes = new TST();
+        int codeLength = 12;
+        int currentCode = 257;
+        String sequence = BinaryStdIn.readString();
 
-        BinaryTree tree = new BinaryTree();
 
-        String word = readWord();
-
-        ArrayList<String> binSequence = new ArrayList<>();
-
-        while (word != "") {
-            binSequence.add(tree.buildSequence(word));
-        }
-
-        BinaryStdOut.write(binSequence.size());
-
-        tree.compressTree();
-
-        for (int i = 0; i < binSequence.size(); i++) {
-            String sequence = tree.getSequence(binSequence.get(i));
-            for (int j = 0; j < sequence.length(); j++) {
-                BinaryStdOut.write(sequence.charAt(i) == '1');
+        int i = 0;
+        while (i < sequence.length()) {
+            String prefix = codes.getLongestPrefix(sequence, i);
+            if (prefix.isEmpty()) {
+                codes.insert(sequence.charAt(i) + "", sequence.charAt(i));
+                prefix = prefix + sequence.charAt(i);
+                currentCode++;
             }
+            else
+            BinaryStdOut.write(codes.lookup(prefix));
+            codes.insert(prefix + sequence.charAt(i + prefix.length()), currentCode);
+            currentCode++;
         }
 
-        BinaryStdOut.close();
+
+
+
+
+
+
+//        // Need some way to determine a standard code length, could include space in the binary tree and not always include it
+//        // I'll experiment with code lengths, but start with 10.
+//        // Need to add a check that if the sequence doesn't end in a space, return, or any kind of punctuation to continue sequence with next set.
+//
+//        BinaryTree tree = new BinaryTree();
+//
+//        String word = readWord();
+//
+//        ArrayList<String> binSequence = new ArrayList<>();
+//
+//        while (word != "") {
+//            binSequence.add(tree.buildSequence(word));
+//        }
+//
+//        BinaryStdOut.write(binSequence.size());
+//
+//        tree.compressTree();
+//
+//        for (int i = 0; i < binSequence.size(); i++) {
+//            String sequence = tree.getSequence(binSequence.get(i));
+//            for (int j = 0; j < sequence.length(); j++) {
+//                BinaryStdOut.write(sequence.charAt(i) == '1');
+//            }
+//        }
+//
+//        BinaryStdOut.close();
     }
 
     public static class Node {
