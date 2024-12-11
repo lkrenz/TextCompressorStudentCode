@@ -35,28 +35,53 @@ public class TextCompressor {
         TST codes = new TST();
         int codeLength = 12;
         int currentCode = 257;
+        int maxCodes = 1;
+        for (int i = 0; i < codeLength; i++) {
+            maxCodes *= 2;
+        }
         String sequence = BinaryStdIn.readString();
+        codes.insert((char)127 + "", 127);
+        BinaryStdOut.write(codeLength);
 
+
+        // For every sequence, get the longest matching prefix
+        // If there is no longest matching prefix, add the current char to the TST
+        // Write the code of the current prefix to the binary file
+        // Find the next longest matching prefix and add the first letter to create a new code
+        // Add that code to the TST and move on
+        // Add the delete key as a prefix immediately and use it to check if the end of the file is reached
 
         int i = 0;
-        while (i < sequence.length()) {
-            String prefix = codes.getLongestPrefix(sequence, i);
-            if (prefix.isEmpty()) {
-                codes.insert(sequence.charAt(i) + "", sequence.charAt(i));
-                prefix = prefix + sequence.charAt(i);
-                currentCode++;
+        String current = "";
+        String newSequence = "";
+        while (true) {
+            current = codes.getLongestPrefix(sequence, i);
+            if (current.isEmpty()) {
+                char character = sequence.charAt(i);
+                codes.insert((char)character +"", character);
+                current += character;
             }
-            else
-            BinaryStdOut.write(codes.lookup(prefix));
-            codes.insert(prefix + sequence.charAt(i + prefix.length()), currentCode);
-            currentCode++;
+            BinaryStdOut.write(codes.lookup(current), codeLength);
+            i += current.length();
+
+            // Todo: add a check for end of string
+            newSequence = codes.getLongestPrefix(sequence, i);
+
+            // Shouldn't need to check if it's below 257 as no other condition exists
+            if (newSequence.isEmpty()) {
+                newSequence = sequence.charAt(i) + "";
+                codes.insert(newSequence, sequence.charAt(i));
+            }
+            if (newSequence.length() == 1 && newSequence.equals((char)127 + "")) {
+                BinaryStdOut.close();
+                return;
+            }
+            if (currentCode < maxCodes) {
+                newSequence = current + newSequence.charAt(0);
+
+                codes.insert(newSequence, currentCode);
+            }
         }
-
-
-
-
-
-
 
 //        // Need some way to determine a standard code length, could include space in the binary tree and not always include it
 //        // I'll experiment with code lengths, but start with 10.
@@ -249,23 +274,73 @@ public class TextCompressor {
 
 
     private void expand() {
-        int numWords = BinaryStdIn.readInt();
-        // TODO: Complete the expand() method
-        BinaryTree tree = new BinaryTree(1);
-        String sequence;
 
-        for (int i = 0; i < numWords; i++) {
-            while (true) {
-                String binary = getSequence(10);
-                sequence = tree.getSequence(binary);
-                if (sequence.charAt(sequence.length() - 1) == ' ') {
-                    break;
+        TST codes = new TST();
+        int codeLength = BinaryStdIn.readInt();
+        String sequence = "";
+        int numCodes = 1;
+        for (int i = 0; i < codeLength; i++) {
+            numCodes *= 2;
+        }
+        int codeNum = 257;
+        String[] codePairs = new String[numCodes];
+
+        // Get the current code and convert it to a string through looking it up.
+        // If the code returns nothing and is below 256, add the char value and add the char to the sequence
+        // If the code still doesn't exist, add the first char to the sequence
+        // Look to the next code and add the current string + the first char as a code
+        // Instant return if code 127 is encountered
+
+        int currentCode = BinaryStdIn.readInt(codeLength);
+        int lookAhead = -1;
+        String forwardString;
+        while (true) {
+            if (codePairs[currentCode] == null && currentCode < 257) {
+                codePairs[currentCode] = (char)currentCode + "";
+            }
+            BinaryStdOut.write(codePairs[currentCode]);
+            lookAhead = BinaryStdIn.readInt(codeLength);
+            if (codePairs[lookAhead] == null) {
+                if (lookAhead < 257) {
+                    forwardString = codePairs[currentCode] + (char)lookAhead;
+                }
+                else {
+                    forwardString = codePairs[currentCode] + codePairs[currentCode].charAt(0);
                 }
             }
-            BinaryStdOut.write(sequence);
+            else if (lookAhead == 127) {
+                BinaryStdOut.close();
+                return;
+            }
+            else {
+                forwardString = codePairs[currentCode] + codePairs[lookAhead].charAt(0);
+            }
+            codes.insert(forwardString, codeNum);
+            codeNum++;
+            currentCode = lookAhead;
         }
 
-        BinaryStdOut.close();
+
+
+
+
+
+//        int numWords = BinaryStdIn.readInt();
+//        // TODO: Complete the expand() method
+//        BinaryTree tree = new BinaryTree(1);
+//        String sequence;
+//
+//        for (int i = 0; i < numWords; i++) {
+//            while (true) {
+//                String binary = getSequence(10);
+//                sequence = tree.getSequence(binary);
+//                if (sequence.charAt(sequence.length() - 1) == ' ') {
+//                    break;
+//                }
+//            }
+//            BinaryStdOut.write(sequence);
+//        }
+//
     }
 
     private String getSequence(int sequenceLength) {
